@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/ui/todo_list/todo_list_page.dart';
+import 'package:todo/util/initial_data_parser.dart';
 
 import 'bloc/todo_bloc.dart';
 import 'db/database.dart';
@@ -20,7 +21,7 @@ class App extends StatelessWidget {
 
           final database = snapshot.data;
           return Provider<TodoBloc>(
-            create: (_) => TodoBloc(database.todoDao),
+            create: (_) => TodoBloc(database.todoDao, InitialDataParser(context)),
             child: TodoListPage(),
           );
         },

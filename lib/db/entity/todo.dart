@@ -10,4 +10,12 @@ class Todo {
   final int dueDateTimestamp;
 
   Todo(this.id, this.done, this.title, this.color, this.dueDateTimestamp);
+
+  factory Todo.fromJson(Map<String, dynamic> json) => Todo(
+        null,
+        json["done"],
+        json["title"],
+        json["color"],
+        json["dueDateTimestamp"],
+      );
 }
