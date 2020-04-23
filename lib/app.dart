@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo/ui/list/list.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/ui/todo_list/todo_list_page.dart';
+
+import 'bloc/todo_bloc.dart';
+import 'db/database.dart';
 
 class App extends StatelessWidget {
   @override
@@ -9,7 +13,18 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: List(),
+      home: FutureBuilder<AppDatabase>(
+        future: AppDatabase.init(),
+        builder: (_, snapshot) {
+          if (!snapshot.hasData) return Container();
+
+          final database = snapshot.data;
+          return Provider<TodoBloc>(
+            create: (_) => TodoBloc(database.todoDao),
+            child: TodoListPage(),
+          );
+        },
+      ),
     );
   }
 }
