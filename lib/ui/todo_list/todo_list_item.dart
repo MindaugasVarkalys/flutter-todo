@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:todo/db/entity/todo.dart';
+
+class TodoListItem extends StatelessWidget {
+  final Todo todo;
+
+  const TodoListItem({Key key, this.todo}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        todo.title,
+        style: TextStyle(decoration: todo.done ? TextDecoration.lineThrough : TextDecoration.none),
+      ),
+      subtitle: Text("Due date: ${DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(todo.dueDateTimestamp))}"),
+      trailing: _ColorBox(color: Colors.red.value),
+    );
+  }
+}
+
+class _ColorBox extends StatelessWidget {
+  final int color;
+
+  const _ColorBox({Key key, this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 32,
+      width: 32,
+      decoration: BoxDecoration(
+        color: Color(color),
+        borderRadius: BorderRadius.all(Radius.circular(4)),
+      ),
+    );
+  }
+}

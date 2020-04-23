@@ -5,13 +5,13 @@ import 'package:todo/db/entity/todo.dart';
 
 class InitialDataParser {
 
-  final BuildContext context;
+  final BuildContext _context;
 
-  InitialDataParser(this.context);
+  InitialDataParser(this._context);
 
   Future<List<Todo>> parse() async {
-    final json = await DefaultAssetBundle.of(context).loadString("assets/initial_data.json");
+    final json = await DefaultAssetBundle.of(_context).loadString("assets/initial_data.json");
     final Iterable<dynamic> parsed = jsonDecode(json);
-    return parsed.map((jsonEntry) => Todo.fromJson(jsonEntry));
+    return parsed.map((jsonEntry) => Todo.fromJson(jsonEntry)).toList();
   }
 }
