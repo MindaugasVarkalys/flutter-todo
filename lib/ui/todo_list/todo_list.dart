@@ -20,7 +20,7 @@ class TodoList extends StatelessWidget {
             separatorBuilder: (c, _) => Divider(),
           );
         }
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }

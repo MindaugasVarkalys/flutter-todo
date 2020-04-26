@@ -8,23 +8,33 @@ import 'package:todo/ui/todo_details/date_time_field.dart';
 class TodoDetailsForm extends StatefulWidget {
   final Todo todo;
 
-  const TodoDetailsForm({Key key, @required this.todo}) : super(key: key);
+  const TodoDetailsForm({Key key, this.todo}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _TodoDetailsFormState();
+    return _TodoDetailsFormState(todo);
   }
 }
 
 class _TodoDetailsFormState extends State<TodoDetailsForm> {
   final _formKey = GlobalKey<FormState>();
+  Todo _formState;
+
+  _TodoDetailsFormState(Todo todo) {
+    _formState = Todo(    // Copy has to be made to not modify values outside of this widget
+      todo?.id,
+      todo?.done ?? false,
+      todo?.title ?? "",
+      todo?.color ?? Todo.colors["Red"],
+      todo?.dueDateTimestamp ?? DateTime.now().millisecondsSinceEpoch,
+    );
+  }
 
   _onSaveClick() {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    _formKey.currentState.save();
-    Provider.of<TodoBloc>(context, listen: false).saveTodo(widget.todo);
+    Provider.of<TodoBloc>(context, listen: false).saveTodo(_formState);
     Navigator.pop(context);
   }
 
@@ -35,25 +45,25 @@ class _TodoDetailsFormState extends State<TodoDetailsForm> {
       child: Column(
         children: [
           TextFormField(
-            initialValue: widget.todo.title,
+            initialValue: _formState.title,
             decoration: InputDecoration(
               labelText: "Title", filled: true, helperText: " ", // Needed so that layout does not move when error appears
             ),
             validator: (value) => value.isEmpty ? "Please insert title" : null,
-            onSaved: (value) => widget.todo.title = value,
+            onChanged: (value) => _formState.title = value,
           ),
           ColorDropdown(
-            value: widget.todo.color,
-            onChanged: (value) => setState(() => widget.todo.color = value),
+            value: _formState.color,
+            onChanged: (value) => setState(() => _formState.color = value),
           ),
           DateTimeField(
-            timestamp: widget.todo.dueDateTimestamp,
-            onChanged: (value) => widget.todo.dueDateTimestamp = value,
+            timestamp: _formState.dueDateTimestamp,
+            onChanged: (value) => _formState.dueDateTimestamp = value,
           ),
           CheckboxListTile(
             title: Text("Done"),
-            value: widget.todo.done,
-            onChanged: (value) => setState(() => widget.todo.done = value),
+            value: _formState.done,
+            onChanged: (value) => setState(() => _formState.done = value),
           ),
           RaisedButton(
             child: Text("SAVE"),

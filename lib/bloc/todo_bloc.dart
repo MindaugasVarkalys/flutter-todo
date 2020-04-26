@@ -11,8 +11,11 @@ class TodoBloc {
 
   TodoBloc(this._todoRepository);
 
-  saveTodo(Todo todo) {
-    _todoRepository.save(todo);
+  saveTodo(Todo todo) async {
+    _todosSubject.add(TodoLoading());
+    await _todoRepository.save(todo);
+    final todos = await _todoRepository.findAll();
+    _todosSubject.add(TodoLoaded(todos));
   }
 
   fetchTodos() async {

@@ -12,9 +12,10 @@ class TodoRepository {
   Future<List<Todo>> findAll() async {
     final todos = await _todoDao.findAll();
     if (todos.length > 0) return todos;
+
     final initialData = await _initialDataParser.parse();
     await Future.wait(initialData.map((todo) => _todoDao.insertTodo(todo)));
-    return initialData;
+    return _todoDao.findAll();
   }
 
   Future<void> save(Todo todo) => _todoDao.insertTodo(todo);

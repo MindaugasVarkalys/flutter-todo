@@ -8,6 +8,13 @@ class TodoListItem extends StatelessWidget {
 
   const TodoListItem({Key key, this.todo}) : super(key: key);
 
+  _openDetailsPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => TodoDetailsPage(todo: todo)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -17,7 +24,7 @@ class TodoListItem extends StatelessWidget {
       ),
       subtitle: Text("Due date: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.fromMillisecondsSinceEpoch(todo.dueDateTimestamp))}"),
       trailing: _ColorBox(color: todo.color),
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TodoDetailsPage(todo: todo))),
+      onTap: () => _openDetailsPage(context),
     );
   }
 }

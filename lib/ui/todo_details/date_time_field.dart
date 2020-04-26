@@ -9,7 +9,7 @@ class DateTimeField extends StatefulWidget {
   const DateTimeField({Key key, @required this.timestamp, @required this.onChanged}) : super(key: key);
 
   @override
-  _DateTimeFieldState createState() => _DateTimeFieldState(date: DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: true));
+  _DateTimeFieldState createState() => _DateTimeFieldState(date: DateTime.fromMillisecondsSinceEpoch(timestamp));
 }
 
 class _DateTimeFieldState extends State<DateTimeField> {
@@ -39,7 +39,7 @@ class _DateTimeFieldState extends State<DateTimeField> {
               filled: true,
             ),
             onTap: () async {
-              date = await showDatePicker(context: context, initialDate: date, firstDate: DateTime.fromMicrosecondsSinceEpoch(0), lastDate: DateTime.fromMicrosecondsSinceEpoch(999999999999999999));
+              date = await showDatePicker(context: context, initialDate: date, firstDate: DateTime.fromMicrosecondsSinceEpoch(0), lastDate: DateTime.fromMicrosecondsSinceEpoch(8640000000000000));
               _dateController.text = _dateFormat.format(date);
               widget.onChanged(date.millisecondsSinceEpoch);
             }
