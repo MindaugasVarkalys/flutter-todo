@@ -1,19 +1,19 @@
 [
   {
     "title": "Complete the interview",
-    "color": 123,
+    "color": 4294198070,
     "dueDateTimestamp": 1587470400000,
     "done": true
   },
   {
     "title": "Finish the assignment",
-    "color": 123,
+    "color": 4283215696,
     "dueDateTimestamp": 1588309200000,
     "done": true
   },
   {
     "title": "Be accepted at Adroiti",
-    "color": 123,
+    "color": 4294940672,
     "dueDateTimestamp": 1588950000000,
     "done": false
   }

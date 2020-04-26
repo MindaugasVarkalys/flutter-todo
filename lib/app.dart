@@ -10,26 +10,26 @@ import 'db/database.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter to-do list',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: FutureBuilder<AppDatabase>(
-        future: AppDatabase.init(),
-        builder: (_, snapshot) {
-          if (!snapshot.hasData) return Container();
+    return FutureBuilder<AppDatabase>(
+      future: AppDatabase.init(),
+      builder: (_, snapshot) {
+        if (!snapshot.hasData) return Container();
 
-          final database = snapshot.data;
-          return MultiProvider(
-            providers: [
-              Provider<TodoRepository>(create: (_) => TodoRepository(database.todoDao, InitialDataParser(context))),
-              Provider<TodoBloc>(create: (context) => TodoBloc(Provider.of<TodoRepository>(context, listen: false))),
-            ],
-            child: TodoListPage(),
-          );
-        },
-      ),
+        final database = snapshot.data;
+        return MultiProvider(
+          providers: [
+            Provider<TodoRepository>(create: (_) => TodoRepository(database.todoDao, InitialDataParser(context))),
+            Provider<TodoBloc>(create: (context) => TodoBloc(Provider.of<TodoRepository>(context, listen: false))),
+          ],
+          child: MaterialApp(
+            title: 'Flutter to-do list',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            home: TodoListPage(),
+          ),
+        );
+      },
     );
   }
 }

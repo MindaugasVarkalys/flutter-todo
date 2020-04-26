@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/db/entity/todo.dart';
+import 'package:todo/ui/todo_details/todo_details_page.dart';
 
 class TodoListItem extends StatelessWidget {
   final Todo todo;
@@ -14,8 +15,9 @@ class TodoListItem extends StatelessWidget {
         todo.title,
         style: TextStyle(decoration: todo.done ? TextDecoration.lineThrough : TextDecoration.none),
       ),
-      subtitle: Text("Due date: ${DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(todo.dueDateTimestamp))}"),
-      trailing: _ColorBox(color: Colors.red.value),
+      subtitle: Text("Due date: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.fromMillisecondsSinceEpoch(todo.dueDateTimestamp))}"),
+      trailing: _ColorBox(color: todo.color),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TodoDetailsPage(todo: todo))),
     );
   }
 }
