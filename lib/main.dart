@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_todo/app.dart';
 import 'package:flutter_todo/bloc/todo_bloc.dart';
 import 'package:flutter_todo/model/api/api_client.dart';
 import 'package:flutter_todo/model/api/response_parser.dart';
@@ -6,7 +8,7 @@ import 'package:get_it/get_it.dart';
 
 void main() {
   registerDependencies();
-  // runApp(const App());
+  runApp(const App());
 }
 
 void registerDependencies() {
